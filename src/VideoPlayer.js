@@ -30,9 +30,13 @@ function openVideoPlayer(e) {
 	e.preventDefault();
 
 	const clicked = $(e.currentTarget);
-	const html = `<iframe width="100%" height="100%" src="https://www.youtube.com/embed/${clicked.data(TARGET_ELEMENT_DATA)}?autoplay=1&rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>`;
+	const isVimeo = clicked.data('is-vimeo');
 
-	shareURL = `http://youtu.be/${clicked.data(TARGET_ELEMENT_DATA)}`;
+	const source = isVimeo ? `https://player.vimeo.com/video/${clicked.data(TARGET_ELEMENT_DATA)}` : `https://www.youtube.com/embed/${clicked.data(TARGET_ELEMENT_DATA)}?autoplay=1&rel=0&modestbranding=1&showinfo=0`;
+	const html = `<iframe width="100%" height="100%" src="${source}" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>`;
+
+	shareURL = isVimeo ? `https://vimeo.com/${clicked.data(TARGET_ELEMENT_DATA)}` : `http://youtu.be/${clicked.data(TARGET_ELEMENT_DATA)}`;
+	
 	player.empty().append(html);
 	videoOverlay.addClass(ACTIVE_CLASS);
 }
