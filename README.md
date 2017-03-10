@@ -14,3 +14,5 @@ Le sélecteur CSS pour les éléments déclencheurs est par défaut `[data-video
  
 On met le ID Youtube comme ceci : `<div data-video-btn="YOUTUBE_ID"></div>`.
 
+S'il s'agit d'un Viméo, simplement utiliser l'attribut `data-is-vimeo="true"` comme ceci : `<div data-video-btn="VIMEO_ID" data-is-vimeo="true"></div>`. 
+
