@@ -22,7 +22,6 @@ function closeVideoPlayer(e) {
 
 	videoOverlay.removeClass(ACTIVE_CLASS);
 	setTimeout(() => {
-		player.stopVideo();
 		player.empty();
 	}, CLOSE_ANIMATION_TIME);
 }
