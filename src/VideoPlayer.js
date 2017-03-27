@@ -7,10 +7,12 @@ let videoOverlay;
 let player;
 let close;
 let shareURL;
+let mailtoText;
 
 const CLOSE_ANIMATION_TIME = 600;
 const ACTIVE_CLASS = 'opened';
 
+const MAILTOTEXT = 'mailto';
 const TARGET_ELEMENT_DATA = 'video-btn';
 const TARGET_ELEMENT_SELECTOR = `[data-${TARGET_ELEMENT_DATA}]`;
 
@@ -36,6 +38,7 @@ function openVideoPlayer(e) {
 	const html = `<iframe width="100%" height="100%" src="${source}" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>`;
 
 	shareURL = isVimeo ? `https://vimeo.com/${clicked.data(TARGET_ELEMENT_DATA)}` : `http://youtu.be/${clicked.data(TARGET_ELEMENT_DATA)}`;
+	mailtoText = clicked.data(MAILTOTEXT);
 	
 	player.empty().append(html);
 	videoOverlay.addClass(ACTIVE_CLASS);
@@ -57,6 +60,9 @@ export default {
 					<div class="linkedin share-button" data-linkedin data-video-share>
 						<i class="linkedin icon-linkedin"></i>
 					</div>
+					<div class="mail share-button" data-mailto data-video-share>
+						<i class="fa fa-envelope"></i>
+					</div>
 				</div>
 				<div class="player"></div>
 			</div>
@@ -71,6 +77,7 @@ export default {
 		const facebookBtn = $('[data-facebook]', videoOverlay);
 		const twitterBtn = $('[data-twitter]', videoOverlay);
 		const linkedinBtn = $('[data-linkedin]', videoOverlay);
+		const mailtoBtn = $('[data-mailto]', videoOverlay);
 
 		facebookBtn.on(`click.${EVENT_NAMESPACE}.video_player`, (e) => {
 			e.preventDefault();
@@ -91,6 +98,15 @@ export default {
 
 			const url = `https://www.linkedin.com/cws/share?url=${shareURL}`;
 			window.open(url, 'Partager', 'width=520,height=570');
+		});
+
+		mailtoBtn.on(`click.${EVENT_NAMESPACE}.video_player`, (e) => {
+			e.preventDefault();
+			
+			const shareMailText = mailtoText;
+			const url = `${shareURL}`;
+
+			window.location.href = `mailto:?Subject=${shareMailText}&body=${url}`;
 		});
 
 		close.on(`click.${EVENT_NAMESPACE}.video_player`, closeVideoPlayer);
